@@ -1,0 +1,83 @@
+---
+// src/components/Nav.astro
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const links = [
+  { href: `${base}/`,              label: 'home' },
+  { href: `${base}/art`,           label: 'art' },
+  { href: `${base}/lab`,           label: 'lab' },
+  { href: `${base}/journal`,       label: 'journal' },
+  { href: `${base}/listening-room`, label: 'listening room' },
+  { href: `${base}/library`,       label: 'library' },
+];
+const current = Astro.url.pathname;
+---
+
+<header class="border-b border-border py-4 px-6">
+  <nav class="max-w-[960px] mx-auto flex items-center justify-between gap-6">
+    <a
+      href={`${base}/`}
+      class="font-serif italic text-heading text-lg no-underline hover:opacity-75"
+    >
+      Michal Čermák
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden sm:flex items-center gap-5 list-none m-0 p-0">
+      {links.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class:list={[
+              'font-mono text-xs tracking-widest no-underline transition-opacity',
+              current === link.href || (link.href !== `${base}/` && current.startsWith(link.href))
+                ? 'text-heading underline underline-offset-4'
+                : 'text-muted hover:text-text',
+            ]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="nav-toggle"
+      class="sm:hidden text-muted hover:text-text font-mono text-xs tracking-widest"
+      aria-label="Toggle menu"
+    >
+      menu
+    </button>
+  </nav>
+
+  <!-- Mobile dropdown -->
+  <ul
+    id="nav-mobile"
+    class="hidden sm:hidden flex-col gap-3 list-none m-0 p-0 max-w-[960px] mx-auto pt-4 pb-2 px-0"
+  >
+    {links.map(link => (
+      <li>
+        <a
+          href={link.href}
+          class:list={[
+            'font-mono text-xs tracking-widest no-underline',
+            current === link.href || (link.href !== `${base}/` && current.startsWith(link.href))
+              ? 'text-heading'
+              : 'text-muted',
+          ]}
+        >
+          {link.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-mobile');
+  toggle?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+    menu?.classList.toggle('flex');
+  });
+</script>

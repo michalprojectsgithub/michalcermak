@@ -1,0 +1,39 @@
+---
+// src/layouts/BaseLayout.astro
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Personal site of Michal Čermák — product manager, indie developer, and artist.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title} — Michal Čermák</title>
+  </head>
+  <body class="bg-bg text-text">
+    <Nav />
+    <main class="px-6 py-12">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

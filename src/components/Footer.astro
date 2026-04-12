@@ -1,0 +1,22 @@
+---
+// src/components/Footer.astro
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-border mt-24 py-8 px-6">
+  <div class="max-w-[960px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+    <span class="font-mono text-xs text-muted tracking-widest">
+      © {year} Michal Čermák
+    </span>
+    <div class="flex gap-5">
+      <a
+        href="https://github.com/michalprojectsgithub"
+        class="font-mono text-xs text-muted tracking-widest no-underline hover:text-text"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        github
+      </a>
+    </div>
+  </div>
+</footer>
