@@ -1,0 +1,78 @@
+---
+// src/layouts/PostLayout.astro
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  date: Date;
+  excerpt?: string;
+}
+
+const { title, date, excerpt } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={excerpt}>
+  <article class="max-w-[680px] mx-auto">
+    <header class="mb-10">
+      <time class="font-mono text-xs text-muted tracking-widest block mb-3">
+        {formattedDate}
+      </time>
+      <h1 class="font-serif italic text-heading text-4xl leading-snug">
+        {title}
+      </h1>
+    </header>
+    <div class="prose-content font-serif text-text leading-relaxed">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose-content :global(h2) {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-style: italic;
+    color: var(--color-heading);
+    font-size: 1.6rem;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose-content :global(h3) {
+    font-family: 'EB Garamond', Georgia, serif;
+    color: var(--color-heading);
+    font-size: 1.3rem;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .prose-content :global(p) {
+    margin-bottom: 1.4rem;
+  }
+
+  .prose-content :global(blockquote) {
+    border-left: 2px solid var(--color-border);
+    padding-left: 1.25rem;
+    color: var(--color-muted);
+    font-style: italic;
+    margin: 1.5rem 0;
+  }
+
+  .prose-content :global(code) {
+    font-family: ui-monospace, monospace;
+    font-size: 0.85em;
+    background: var(--color-surface);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+  }
+
+  .prose-content :global(hr) {
+    border-color: var(--color-border);
+    margin: 2.5rem 0;
+  }
+</style>
