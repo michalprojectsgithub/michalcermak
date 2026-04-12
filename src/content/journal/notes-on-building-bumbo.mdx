@@ -1,0 +1,31 @@
+---
+title: Notes on Building Bumbo
+date: 2025-09-17
+excerpt: Bumbo is a calm daily assistant I built for myself using Electron. Here are some notes on why I built it, what it does, and what I learned.
+tags: [building, electron, software]
+draft: false
+---
+
+Bumbo started because I was tired of my own todo list.
+
+Not the concept of a todo list — I find the concept entirely reasonable. I was tired of the specific texture of every todo app I tried. The badges. The streak counts. The "you're on a roll!" notifications. The ambient sense that you are always behind, always owing something to the system.
+
+I wanted something quieter.
+
+## What Bumbo is
+
+Bumbo is a small Electron app. It lives in your menu bar. When you open it, you see a single day. A short list of things. A text area where you can write a note for yourself. Nothing syncs. Nothing notifies you. There are no priorities, no labels, no recurring tasks.
+
+When the day ends, it ends. You can look back at what you did, but you can't be haunted by what you didn't finish. It just shows you today.
+
+## What I learned building it
+
+**Electron is heavier than it should be** for something this small. The executable is too large for an app whose entire state fits in a JSON file. I've accepted this as the price of desktop-native behaviour without learning Swift or C++.
+
+**Calm software is an editorial problem.** The hardest decisions weren't technical — they were about what to leave out. Every feature I considered and rejected was reasonable in isolation. Recurring tasks: useful. Cloud sync: useful. Keyboard shortcuts for every action: useful. But each one would have added a small amount of ambient complexity. And ambient complexity accumulates into exactly the kind of app I was trying not to build.
+
+**Building for yourself is freeing.** I shipped Bumbo when it worked for me, not when it was ready for anyone else. That's a luxury I won't always have, and I've tried to appreciate it.
+
+---
+
+Bumbo is currently paused while I work on Quiet Room. But I use it every day.
