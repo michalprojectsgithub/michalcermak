@@ -1,0 +1,45 @@
+---
+// src/components/ProjectCard.astro
+interface Props {
+  name: string;
+  description: string;
+  status: 'active' | 'paused' | 'archived';
+  url?: string;
+  tech?: string[];
+}
+
+const { name, description, status, url, tech } = Astro.props;
+
+const statusStyles: Record<string, string> = {
+  active:   'text-green-400 border-green-900',
+  paused:   'text-muted border-border',
+  archived: 'text-muted border-border opacity-60',
+};
+---
+
+<article class="border border-border rounded bg-surface p-5 flex flex-col gap-3">
+  <div class="flex items-start justify-between gap-3">
+    <h3 class="font-serif text-heading text-xl leading-snug">{name}</h3>
+    <span class:list={['font-mono text-xs border px-2 py-0.5 rounded shrink-0', statusStyles[status]]}>
+      {status}
+    </span>
+  </div>
+  <p class="text-text text-sm leading-relaxed">{description}</p>
+  {tech && tech.length > 0 && (
+    <div class="flex flex-wrap gap-2">
+      {tech.map(t => (
+        <span class="font-mono text-xs text-muted">{t}</span>
+      ))}
+    </div>
+  )}
+  {url && (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="font-mono text-xs text-accent underline underline-offset-2 mt-auto self-start"
+    >
+      {url.replace(/^https?:\/\//, '')} ↗
+    </a>
+  )}
+</article>

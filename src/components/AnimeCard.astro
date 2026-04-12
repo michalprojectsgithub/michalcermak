@@ -1,0 +1,21 @@
+---
+// src/components/AnimeCard.astro
+interface Props {
+  title: string;
+  studio?: string;
+  year?: number;
+  note: string;
+}
+
+const { title, studio, year, note } = Astro.props;
+---
+
+<article class="border border-border rounded bg-surface p-4 flex flex-col gap-2">
+  <h3 class="font-serif text-heading text-base leading-snug">{title}</h3>
+  {(studio || year) && (
+    <span class="font-mono text-xs text-muted">
+      {[studio, year].filter(Boolean).join(' · ')}
+    </span>
+  )}
+  <p class="font-serif italic text-text text-sm leading-relaxed">{note}</p>
+</article>

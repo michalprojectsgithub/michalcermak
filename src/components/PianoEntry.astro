@@ -1,0 +1,29 @@
+---
+// src/components/PianoEntry.astro
+interface Props {
+  title: string;
+  composer: string;
+  youtubeId: string;
+  note: string;
+}
+
+const { title, composer, youtubeId, note } = Astro.props;
+---
+
+<article class="border-b border-border pb-10 last:border-0">
+  <div class="mb-3">
+    <h3 class="font-serif italic text-heading text-xl">{title}</h3>
+    <span class="font-mono text-xs text-muted tracking-widest">{composer}</span>
+  </div>
+  <div class="relative w-full aspect-video bg-surface rounded overflow-hidden mb-4">
+    <iframe
+      src={`https://www.youtube.com/embed/${youtubeId}`}
+      title={`${title} by ${composer}`}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      loading="lazy"
+      class="absolute inset-0 w-full h-full border-0"
+    ></iframe>
+  </div>
+  <p class="font-serif italic text-muted text-sm leading-relaxed max-w-[600px]">{note}</p>
+</article>
