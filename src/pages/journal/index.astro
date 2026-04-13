@@ -1,0 +1,43 @@
+---
+// src/pages/journal/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('journal', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout title="Journal" description="Writing by Michal Čermák">
+  <div class="max-w-[680px] mx-auto">
+
+    <h1 class="font-serif italic text-heading text-4xl mb-12 leading-snug">Journal</h1>
+
+    <ul class="flex flex-col gap-10 list-none p-0 m-0">
+      {posts.map(post => {
+        const slug = post.id.replace(/\.(mdx?)$/, '');
+        const date = post.data.date.toLocaleDateString('en-GB', {
+          day: 'numeric', month: 'long', year: 'numeric',
+        });
+        return (
+          <li>
+            <time class="font-mono text-xs text-muted tracking-widest block mb-1">
+              {date}
+            </time>
+            <a
+              href={`${base}/journal/${slug}`}
+              class="font-serif italic text-heading text-xl leading-snug no-underline hover:underline hover:underline-offset-4 block mb-2"
+            >
+              {post.data.title}
+            </a>
+            <p class="font-serif text-text text-sm leading-relaxed">
+              {post.data.excerpt}
+            </p>
+          </li>
+        );
+      })}
+    </ul>
+
+  </div>
+</BaseLayout>
