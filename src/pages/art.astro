@@ -1,0 +1,44 @@
+---
+// src/pages/art.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const artworks = await getCollection('art');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout title="Art" description="Paintings and drawings by Michal Čermák">
+  <div class="max-w-[960px] mx-auto">
+
+    <header class="mb-12 max-w-[680px]">
+      <h1 class="font-serif italic text-heading text-4xl mb-4 leading-snug">Art</h1>
+      <p class="font-serif text-text leading-relaxed">
+        Paintings and drawings. Mostly oil, ink, and charcoal. Mostly not finished.
+      </p>
+    </header>
+
+    <ul class="grid grid-cols-2 sm:grid-cols-3 gap-4 list-none p-0 m-0">
+      {artworks.map(piece => (
+        <li>
+          <figure class="m-0">
+            <div class="bg-surface border border-border rounded overflow-hidden aspect-[4/3]">
+              <img
+                src={`${base}${piece.data.image}`}
+                alt={piece.data.title}
+                loading="lazy"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <figcaption class="mt-2 px-1">
+              <p class="font-serif text-text text-sm leading-snug">{piece.data.title}</p>
+              <p class="font-mono text-xs text-muted mt-0.5">
+                {piece.data.medium}{piece.data.year ? `, ${piece.data.year}` : ''}
+              </p>
+            </figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</BaseLayout>
