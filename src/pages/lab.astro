@@ -1,0 +1,40 @@
+---
+// src/pages/lab.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+
+const statusOrder = { active: 0, paused: 1, archived: 2 } as const;
+const projects = allProjects.sort(
+  (a, b) => statusOrder[a.data.status] - statusOrder[b.data.status]
+);
+---
+
+<BaseLayout title="Lab" description="Software projects by Michal Čermák">
+  <div class="max-w-[960px] mx-auto">
+
+    <header class="mb-12 max-w-[680px]">
+      <h1 class="font-serif italic text-heading text-4xl mb-4 leading-snug">Lab</h1>
+      <p class="font-serif text-text leading-relaxed">
+        Side projects and tools I've built. Mostly desktop software. Mostly calm.
+      </p>
+    </header>
+
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-5 list-none p-0 m-0">
+      {projects.map(project => (
+        <li>
+          <ProjectCard
+            name={project.data.name}
+            description={project.data.description}
+            status={project.data.status}
+            url={project.data.url}
+            tech={project.data.tech}
+          />
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</BaseLayout>
