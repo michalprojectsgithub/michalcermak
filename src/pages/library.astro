@@ -1,0 +1,67 @@
+---
+// src/pages/library.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookCard from '../components/BookCard.astro';
+import AnimeCard from '../components/AnimeCard.astro';
+import { getCollection } from 'astro:content';
+
+const books = await getCollection('books');
+const animeLearnings = await getCollection('anime-learnings');
+
+const statusOrder = { reading: 0, read: 1, 'want-to-read': 2 } as const;
+const sortedBooks = books.sort(
+  (a, b) => statusOrder[a.data.status] - statusOrder[b.data.status]
+);
+---
+
+<BaseLayout title="Library" description="Books, anime, and ideas that matter to Michal Čermák">
+  <div class="max-w-[960px] mx-auto">
+
+    <h1 class="font-serif italic text-heading text-4xl mb-16 leading-snug max-w-[680px]">Library</h1>
+
+    <!-- Books -->
+    <section class="mb-16">
+      <h2 class="font-mono text-xs text-muted tracking-widest uppercase mb-6">— books —</h2>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0 m-0">
+        {sortedBooks.map(book => (
+          <li>
+            <BookCard
+              title={book.data.title}
+              author={book.data.author}
+              status={book.data.status}
+              note={book.data.note}
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Anime Learnings -->
+    <section class="mb-16">
+      <h2 class="font-mono text-xs text-muted tracking-widest uppercase mb-6">— anime learnings —</h2>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 list-none p-0 m-0">
+        {animeLearnings.map(entry => (
+          <li>
+            <AnimeCard
+              title={entry.data.title}
+              studio={entry.data.studio}
+              year={entry.data.year}
+              note={entry.data.note}
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Ideas -->
+    <section>
+      <h2 class="font-mono text-xs text-muted tracking-widest uppercase mb-6">— ideas —</h2>
+      <div class="max-w-[680px]">
+        <p class="font-serif text-text text-lg leading-relaxed">
+          I find myself drawn to the same ideas across different domains: the value of constraints, the ethics of attention, the idea that the best tools disappear. Calm software, slow craft, and work that knows what it's for — these feel related to me, though I haven't fully articulated how.
+        </p>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
