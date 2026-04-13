@@ -1,7 +1,49 @@
 ---
-// src/pages/index.astro (temporary smoke test)
+// src/pages/index.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
+
 <BaseLayout title="Home">
-  <p class="text-heading font-serif">Layout works.</p>
+  <div class="max-w-[680px] mx-auto">
+
+    <section class="mb-16">
+      <h1 class="font-serif italic text-heading text-4xl mb-6 leading-snug">
+        Michal Čermák
+      </h1>
+      <p class="font-serif text-text text-lg leading-relaxed mb-4">
+        Product manager, indie developer, and artist. I build calm software, make things by hand, and think about attention and craft.
+      </p>
+      <p class="font-serif text-text text-lg leading-relaxed">
+        This is my small corner of the internet — a place for work, writing, and the things I find meaningful.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="font-mono text-xs text-muted tracking-widest uppercase mb-6">
+        — now —
+      </h2>
+      <ul class="flex flex-col gap-4 list-none p-0 m-0">
+        <li class="flex gap-4 items-baseline">
+          <span class="font-mono text-xs text-muted tracking-widest shrink-0 w-20">reading</span>
+          <span class="font-serif text-text">
+            <em>The Artist's Way</em> by Julia Cameron — the morning pages practice is changing how I start my days.
+          </span>
+        </li>
+        <li class="flex gap-4 items-baseline">
+          <span class="font-mono text-xs text-muted tracking-widest shrink-0 w-20">building</span>
+          <span class="font-serif text-text">
+            Quiet Room v2 — a calmer workspace for artists.
+            <a href="https://myquietroom.com" target="_blank" rel="noopener noreferrer" class="ml-1">myquietroom.com ↗</a>
+          </span>
+        </li>
+        <li class="flex gap-4 items-baseline">
+          <span class="font-mono text-xs text-muted tracking-widest shrink-0 w-20">painting</span>
+          <span class="font-serif text-text">
+            A series of small ink studies — exploring negative space and what happens when you leave things out.
+          </span>
+        </li>
+      </ul>
+    </section>
+
+  </div>
 </BaseLayout>
