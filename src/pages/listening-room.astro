@@ -1,0 +1,32 @@
+---
+// src/pages/listening-room.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PianoEntry from '../components/PianoEntry.astro';
+import { getCollection } from 'astro:content';
+
+const pieces = await getCollection('piano');
+---
+
+<BaseLayout title="Listening Room" description="Piano music I love, curated by Michal Čermák">
+  <div class="max-w-[680px] mx-auto">
+
+    <header class="mb-12">
+      <h1 class="font-serif italic text-heading text-4xl mb-4 leading-snug">Listening Room</h1>
+      <p class="font-serif text-text leading-relaxed">
+        Piano music I return to. Each piece earns its place by doing something no other piece does.
+      </p>
+    </header>
+
+    <div class="flex flex-col gap-12">
+      {pieces.map(piece => (
+        <PianoEntry
+          title={piece.data.title}
+          composer={piece.data.composer}
+          youtubeId={piece.data.youtubeId}
+          note={piece.data.note}
+        />
+      ))}
+    </div>
+
+  </div>
+</BaseLayout>
